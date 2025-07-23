@@ -13,7 +13,7 @@ const Navbar = () => {
       <div className="flex items-center gap-4">
         <Link to="/upload" className="primary-button w-fit">
           <FileUser className="mr-2" />
-          Uploader le CV
+          Uploader CV
         </Link>
 
         {auth.isAuthenticated && (
