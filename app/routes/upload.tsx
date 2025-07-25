@@ -1,5 +1,6 @@
 import { FileScan, WandSparkles } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { FileUploader, Navbar } from "~/components"
 import { prepareInstructions } from "~/constants";
 import { convertPdfToImage } from "~/lib/pdf2img";
@@ -56,6 +57,7 @@ export const meta = () => ([
 ])
 
 const Upload = () => {
+  const navigate = useNavigate();
   const { auth, isLoading, fs, ai, kv } = usePuterStore();
   const [isProcessing, setIsProcessing] = useState(false);
   const [statusText, setStatusText] = useState("");
@@ -109,7 +111,10 @@ const Upload = () => {
     data.feedback = JSON.parse(feedbackText);
     await kv.set(`resume: ${uuid}`, JSON.stringify(data));
     setStatusText("Analyse termée. Redirection...");
+
     console.log(data);
+
+    return navigate(`/resume/${uuid}`);
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
