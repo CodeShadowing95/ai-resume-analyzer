@@ -1,6 +1,10 @@
 import { FileScan, WandSparkles } from "lucide-react";
 import { useState } from "react";
 import { FileUploader, Navbar } from "~/components"
+import { prepareInstructions } from "~/constants";
+import { convertPdfToImage } from "~/lib/pdf2img";
+import { usePuterStore } from "~/lib/puter";
+import { generateUUID } from "~/lib/utils";
 
 export const meta = () => ([
   { title: "Analyseur de CV IA - Upload et Analyse ATS | Curriqulum.ai" },
@@ -52,6 +56,7 @@ export const meta = () => ([
 ])
 
 const Upload = () => {
+  const { auth, isLoading, fs, ai, kv } = usePuterStore();
   const [isProcessing, setIsProcessing] = useState(false);
   const [statusText, setStatusText] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -60,7 +65,54 @@ const Upload = () => {
     setFile(file);
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAnalyze = async ({ companyName, jobTitle, jobDescription, file }: { companyName: string; jobTitle: string; jobDescription: string; file: File }) => {
+    setIsProcessing(true);
+    setStatusText("Chargement du CV en cours...");
+
+    const uploadedFile = await fs.upload([file]);
+    if(!uploadedFile) return setStatusText("Une erreur s'est produite lors de l'upload du CV.");
+
+    setStatusText("Conversion du CV en image...");
+
+    const imageFile = await convertPdfToImage(file);
+    if(!imageFile.file) return setStatusText("Une erreur s'est produite lors de la conversion du CV en image.");
+
+    setStatusText("Chargement de l'image en cours...");
+    const uploadedImage = await fs.upload([imageFile.file]);
+    if(!uploadedImage) return setStatusText("Une erreur s'est produite lors du chargement de l'image.");
+
+    setStatusText("Collecte de données...");
+
+    const uuid = generateUUID();
+    const data = {
+      id: uuid,
+      resumePath: uploadedFile.path,
+      imagePath: uploadedImage.path,
+      companyName, jobTitle, jobDescription,
+      feedback: "",
+    };
+    await kv.set(`resume: ${uuid}`, JSON.stringify(data));
+
+    setStatusText("Analyse en cours...");
+
+    const feedback = await ai.feedback(
+      uploadedFile.path,
+      prepareInstructions({ jobTitle, jobDescription }),
+    )
+
+    if(!feedback) return setStatusText("Une erreur s'est produite lors de l'analyse du CV.");
+
+    const feedbackText = typeof feedback.message.content === "string"
+    ? feedback.message.content
+    : feedback.message.content[0].text;
+
+    data.feedback = JSON.parse(feedbackText);
+    await kv.set(`resume: ${uuid}`, JSON.stringify(data));
+    setStatusText("Analyse termée. Redirection...");
+    console.log(data);
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const form = e.currentTarget.closest("form");
@@ -75,12 +127,7 @@ const Upload = () => {
 
     if(!companyName || !jobTitle || !jobDescription || !file) return;
 
-    console.log({
-      companyName,
-      jobTitle,
-      jobDescription,
-      file,
-    })
+    await handleAnalyze({ companyName, jobTitle, jobDescription, file });
   }
 
   return (

@@ -39,3 +39,9 @@ export function getFileSizeCategory(bytes: number): 'small' | 'medium' | 'large'
   if (mb < 15) return 'large';
   return 'xlarge';
 }
+
+/**
+ * Generates a random UUID
+ * @returns A random UUID
+ */
+export const generateUUID = () => crypto.randomUUID();
