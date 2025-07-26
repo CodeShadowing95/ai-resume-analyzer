@@ -7,22 +7,22 @@ const ScoreBadge = ({ score }: ScoreBadgeProps) => {
   const getBadgeStyles = () => {
     if (score > 70) {
       return {
-        bgColor: "bg-green-100",
-        textColor: "text-green-600",
+        bgColor: "bg-[var(--color-badge-green)]",
+        textColor: "text-[var(--color-text-green)]",
         borderColor: "border-green-200",
         label: "Excellent"
       };
     } else if (score > 49) {
       return {
-        bgColor: "bg-yellow-100",
-        textColor: "text-yellow-600",
+        bgColor: "bg-[var(--color-badge-yellow)]",
+        textColor: "text-[var(--color-text-yellow)]",
         borderColor: "border-yellow-200",
         label: "À améliorer"
       };
     } else {
       return {
-        bgColor: "bg-red-100",
-        textColor: "text-red-600",
+        bgColor: "bg-[var(--color-badge-red)]",
+        textColor: "text-[var(--color-text-red)]",
         borderColor: "border-red-200",
         label: "Critique"
       };

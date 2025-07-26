@@ -1,9 +1,9 @@
-import { resumes } from "~/constants";
 import type { Route } from "./+types/home";
 import { Navbar, ResumeCard } from "~/components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePuterStore } from "~/lib/puter";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import { FileUser, Upload } from "lucide-react";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -20,14 +20,30 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  const { auth } = usePuterStore();
-  const location = useLocation();
-  const next = location.search.split('next=')[1];
+  const { auth, kv } = usePuterStore();
   const navigate = useNavigate();
+  const [resumes, setResumes] = useState<Resume[]>([]);
+  const [loadingResumes, setLoadingResumes] = useState(false);
 
   useEffect(() => {
     if(!auth.isAuthenticated) navigate('/auth?next=/');
   }, [auth.isAuthenticated]);
+
+  useEffect(() => {
+    const loadResumes = async () => {
+      setLoadingResumes(true);
+
+      const resumesList = (await kv.list('resume:*', true)) as KVItem[];
+
+      const parsedResumes = resumesList?.map((resume) => JSON.parse(resume.value));
+
+      console.log("Parsed resumes:", parsedResumes);
+      setResumes(parsedResumes || []);
+      setLoadingResumes(false);
+    }
+
+    loadResumes();
+  }, []);
 
   return (
     <main className="bg-[url('/images/bg-main.svg')] bg-cover">
@@ -36,14 +52,46 @@ export default function Home() {
       <section className="main-section">
         <div className="page-heading py-16">
           <h1>Suivez vos Candidatures et Notes sur votre CV</h1>
-          <h2>Obtenez un score ATS et des recommandations personnalisées pour maximiser vos chances d'entretien.</h2>
+          {!loadingResumes && resumes.length === 0 ? (
+            <h2>Vous n'avez pas encore de CVs enregistrés. Uploadez votre 1er CV pour obtenez des feedbacks détaillés.</h2>
+          ) : (
+            <h2>Obtenez un score ATS et des recommandations personnalisées pour maximiser vos chances d'entretien.</h2>
+          )
+        }
         </div>
 
-        {resumes.length > 0 && (
+        {loadingResumes && (
+          <div className="flex flex-col justify-center items-center">
+            <img src="/images/resume-scan-2.gif" alt="Loading" className="w-64" />
+            <p className="text-gray-500">Chargement des CVs...</p>
+          </div>
+        )}
+
+        {!loadingResumes && resumes.length > 0 && (
           <div className="resumes-section">
             {resumes.map((resume: Resume) => (
               <ResumeCard key={resume.id} resume={resume} />
             ))}
+          </div>
+        )}
+
+        {!loadingResumes && resumes.length === 0 && (
+          <div className="flex flex-col items-center justify-center gap-6 py-12">
+            <img 
+              src="/images/no-resumes.svg" 
+              alt="No resumes found" 
+              className="h-80 opacity-80"
+            />
+            <p className="text-gray-600 text-lg text-center max-w-md">
+              Commencez par télécharger votre CV pour obtenir une analyse détaillée et des recommandations personnalisées.
+            </p>
+            <button 
+              className="primary-button w-fit font-semibold"
+              onClick={() => navigate('/upload')}
+            >
+              <Upload className="mr-2" />
+              J'upload mon CV
+            </button>
           </div>
         )}
       </section>
