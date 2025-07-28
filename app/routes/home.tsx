@@ -51,7 +51,7 @@ export default function Home() {
 
       <section className="main-section">
         <div className="page-heading py-16">
-          <h1>Suivez vos Candidatures et Notes sur votre CV</h1>
+          <h1>Le <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400">Cheat-code</span> infaillible pour passer tous les ATS recruteurs</h1>
           {!loadingResumes && resumes.length === 0 ? (
             <h2>Vous n'avez pas encore de CVs enregistrés. Uploadez votre 1er CV pour obtenez des feedbacks détaillés.</h2>
           ) : (
@@ -76,7 +76,7 @@ export default function Home() {
         )}
 
         {!loadingResumes && resumes.length === 0 && (
-          <div className="flex flex-col items-center justify-center gap-6 py-12">
+          <div className="flex flex-col items-center justify-center gap-6">
             <img 
               src="/images/no-resumes.svg" 
               alt="No resumes found" 
