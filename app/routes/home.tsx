@@ -3,7 +3,7 @@ import { Navbar, ResumeCard } from "~/components";
 import { useEffect, useState } from "react";
 import { usePuterStore } from "~/lib/puter";
 import { useNavigate } from "react-router";
-import { FileUser, Upload } from "lucide-react";
+import { Upload, Trash2, Brush, BrushCleaning } from "lucide-react";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -46,14 +46,14 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="bg-[url('/images/bg-main.svg')] bg-cover">
+    <main className="bg-[url('/images/bg-main.svg')] bg-cover relative">
       <Navbar />
 
       <section className="main-section">
         <div className="page-heading py-16">
           <h1>Suivez vos Candidatures et Notes sur votre CV</h1>
           {!loadingResumes && resumes.length === 0 ? (
-            <h2>Vous n'avez pas encore de CVs enregistrés. Uploadez votre 1er CV pour obtenez des feedbacks détaillés.</h2>
+            <h2>Vous n'avez pas encore de CVs enregistrés. Uploadez votre 1er CV et obtenez des feedbacks détaillés.</h2>
           ) : (
             <h2>Obtenez un score ATS et des recommandations personnalisées pour maximiser vos chances d'entretien.</h2>
           )
@@ -95,6 +95,18 @@ export default function Home() {
           </div>
         )}
       </section>
+
+      {/* Bouton Effacer tout en position absolue */}
+      {!loadingResumes && resumes.length > 0 && (
+        <button 
+          className="fixed bottom-6 right-6 bg-gradient-to-br from-violet-600 via-indigo-500 to-teal-400 text-white px-4 py-3 rounded-full shadow-[0_4px_20px_rgba(79,70,229,0.3)] hover:shadow-[0_8px_25px_rgba(79,70,229,0.45)] transition-all duration-300 flex items-center gap-0 hover:gap-2 font-medium text-sm group z-50 overflow-hidden hover:px-6 hover:scale-105"
+          onClick={() => navigate('/wipe')}
+          title="Effacer toutes les données"
+        >
+          <BrushCleaning className="w-5 h-5 group-hover:scale-110 transition-transform duration-200 flex-shrink-0 animate-pulse" />
+          <span className="max-w-0 group-hover:max-w-xs opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out overflow-hidden whitespace-nowrap">Nettoyage</span>
+        </button>
+      )}
     </main>
   );
 }

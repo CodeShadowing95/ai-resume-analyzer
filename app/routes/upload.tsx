@@ -148,7 +148,7 @@ const Upload = () => {
               <img src="/images/resume-scan.gif" alt="resume scan" className="w-full" />
             </>
           ) : (
-            <h2>Upload votre CV et obtenez un score ATS et des recommandations personnalisées pour maximiser vos chances d'entretien.</h2>
+            <h2>Dépose ton CV et obtiens un score ATS et des recommandations personnalisées pour maximiser tes chances d'entretien.</h2>
           )}
 
           {!isProcessing && (
