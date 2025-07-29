@@ -1,6 +1,6 @@
-# 🤖 Resume Analyzer - Analyseur de CV avec IA
+# 🤖 Curriqulum.ai - Votre CV Compatible 100% ATS
 
-Une application web moderne d'analyse de CV utilisant l'intelligence artificielle pour évaluer et optimiser les CV selon les standards ATS (Applicant Tracking System).
+Une application web moderne d'analyse de CV utilisant l'intelligence artificielle pour garantir une compatibilité totale avec tous les systèmes ATS (Applicant Tracking System) des recruteurs.
 
 ![Resume Analyzer](./public/images/resume-scan.gif)
 
@@ -20,27 +20,30 @@ Une application web moderne d'analyse de CV utilisant l'intelligence artificiell
 
 ## 🎯 Aperçu du projet
 
-Resume Analyzer est une application web sophistiquée qui utilise l'intelligence artificielle pour analyser les CV et fournir des recommandations d'amélioration. L'application évalue la compatibilité ATS, identifie les points forts et faibles, et propose des suggestions concrètes pour optimiser les chances de succès lors des candidatures.
+Curriqulum.ai est une application web sophistiquée qui utilise l'intelligence artificielle pour **garantir une compatibilité 100% ATS** de votre CV. Notre solution révolutionnaire assure que votre CV passe tous les filtres automatiques des recruteurs, maximisant ainsi vos chances d'obtenir un entretien.
 
 ### Objectifs principaux :
-- **Analyse ATS** : Évaluation de la compatibilité avec les systèmes de suivi des candidatures
-- **Optimisation** : Suggestions d'amélioration basées sur l'IA
-- **Scoring** : Attribution d'un score de qualité global
-- **Recommandations** : Conseils personnalisés pour chaque section du CV
+- **Compatibilité ATS 100%** : Garantie de passage de tous les systèmes de suivi des candidatures
+- **Optimisation intelligente** : Suggestions d'amélioration basées sur l'IA pour maximiser l'impact
+- **Scoring précis** : Attribution d'un score de qualité global et par section
+- **Recommandations ciblées** : Conseils personnalisés pour chaque élément du CV
+- **Analyse en temps réel** : Feedback instantané sur les modifications apportées
 
 ## ✨ Fonctionnalités
 
 ### 🔍 Analyse intelligente
-- **Parsing PDF** : Extraction automatique du contenu des CV au format PDF
-- **Analyse sémantique** : Compréhension du contexte et du contenu
-- **Évaluation ATS** : Vérification de la compatibilité avec les systèmes de recrutement
-- **Scoring multi-critères** : Évaluation sur plusieurs dimensions
+- **Parsing PDF avancé** : Extraction automatique et précise du contenu des CV
+- **Analyse sémantique IA** : Compréhension approfondie du contexte et du contenu
+- **Garantie ATS 100%** : Vérification et optimisation pour tous les systèmes de recrutement
+- **Scoring multi-critères** : Évaluation complète sur toutes les dimensions importantes
+- **Détection des mots-clés** : Identification des termes essentiels pour votre secteur
 
 ### 📊 Rapports détaillés
-- **Score global** : Note générale de 0 à 100
-- **Analyse par section** : Évaluation détaillée de chaque partie du CV
-- **Recommandations ciblées** : Suggestions d'amélioration spécifiques
-- **Visualisations** : Graphiques et indicateurs visuels
+- **Score global optimisé** : Note de compatibilité ATS de 0 à 100
+- **Analyse section par section** : Évaluation détaillée de chaque partie du CV
+- **Recommandations ATS** : Suggestions spécifiques pour passer tous les filtres
+- **Visualisations interactives** : Graphiques et indicateurs visuels en temps réel
+- **Comparaison sectorielle** : Benchmarking avec les standards de votre industrie
 
 ### 🎨 Interface utilisateur
 - **Design moderne** : Interface responsive et intuitive
@@ -339,4 +342,4 @@ Pour toute question ou problème :
 
 **Développé avec ❤️ par Patrick NAMEGNI**
 
-*Resume Analyzer - Optimisez vos CV avec l'intelligence artificielle*
+*Curriqulum.ai - Votre CV Compatible 100% ATS*
